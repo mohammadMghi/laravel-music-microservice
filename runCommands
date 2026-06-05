@@ -1,0 +1,26 @@
+sudo docker run -d \
+  --name user_db \
+  --network microservices-net \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -e MYSQL_DATABASE=user_db \
+  -e MYSQL_USER=user \
+  -e MYSQL_PASSWORD=userpass \
+  mysql:8.0
+
+
+sudo docker run -d \
+  --name music_db \
+  --network microservices-net \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -e MYSQL_DATABASE=music_db \
+  -e MYSQL_USER=music \
+  -e MYSQL_PASSWORD=musicpass \
+  mysql:8.0
+
+
+docker run -d \
+  --name gateway_nginx \
+  --network microservices-net \
+  -p 8080:80 \
+  -v $(pwd)/default.conf:/etc/nginx/conf.d/default.conf:ro \
+  nginx
