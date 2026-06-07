@@ -49,7 +49,8 @@ class ProcessIncomingEvent implements ShouldQueue
     protected function handleSongCreated(array $payload)
     { 
         Song::create([
-            'song_id' => $payload['id']
+            'song_id' => $payload['id'],
+            'title' => $payload['title'] ?? 'song'
         ]);
     }
 }
