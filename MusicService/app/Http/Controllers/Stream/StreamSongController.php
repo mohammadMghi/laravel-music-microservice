@@ -9,15 +9,13 @@ use Illuminate\Http\Request;
 class StreamSongController extends Controller
 {
     public function __invoke($id)
-    {
+    { 
         $music = Music::findOrFail($id);
- 
-        $path = storage_path('app/private/' . $music->path);
-
-        if (!file_exists($path)) {
-            abort(404, 'Song file not found');
-        }
-
-        return response()->file($path);
+    
+        return response('', 200, [
+            'Content-Type' => 'audio/mpeg',
+            'X-Accel-Redirect' => '/protected-music/' . $music->path,
+            'Accept-Ranges' => 'bytes',
+        ]);
     }
 }
